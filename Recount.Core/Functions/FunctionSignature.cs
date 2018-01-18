@@ -1,0 +1,35 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Recount.Core.Identifiers;
+using Recount.Core.Lexemes;
+
+namespace Recount.Core.Functions
+{
+    public class FunctionSignature
+    {
+        public Variable Name { get; }
+
+        public List<FunctionArgument> Arguments { get; }
+
+        public FunctionSignature(Variable name)
+        {
+            Name = name;
+            Arguments = new List<FunctionArgument>();
+        }
+
+        public void AppendArgument(LexemeBuilder builder)
+        {
+            Arguments.Add(new FunctionArgument(builder));
+        }
+
+        public bool IsValidFunctionDeclaration()
+        {
+            return Name.StartIndex == 0 && Arguments.All(argument => argument.IsIdentifier());
+        }
+
+        public Function ConvertToFunction()
+        {
+            return new Function { Name = Name, Parameters = Arguments.Select(a => a.ConvertToParameter()).ToList() };
+        }
+    }
+}

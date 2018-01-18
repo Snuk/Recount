@@ -1,0 +1,11 @@
+.vs
+obj/
+bin/
+_ReSharper*/
+**/packages
+*.user
+*.rej
+*.suo
+*.orig
+*.DotSettings
+

@@ -20,5 +20,7 @@ namespace Recount.Core.Lexemes
         Dictionary<Variable, Number> GetVariables();
 
         Function GetFunction(Variable name);
+
+        CalculationLexemesStack Copy();
     }
 }

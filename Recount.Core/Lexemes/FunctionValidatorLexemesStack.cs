@@ -76,5 +76,10 @@ namespace Recount.Core.Lexemes
         {
             throw new NotImplementedException();
         }
+
+        public CalculationLexemesStack Copy()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -67,12 +67,7 @@ namespace Recount.Core.InterpreterStates
                 var argument = signature.Arguments[index];
                 var parameter = function.Parameters[index];
 
-                var argumentCalculatorStack = new CalculationLexemesStack();
-                foreach (var variable in stack.GetVariables())
-                {
-                    argumentCalculatorStack.AddVariable(variable.Key, variable.Value);
-                }
-
+                var argumentCalculatorStack = stack.Copy();
                 var argumentCalculator = new Interpreter(argumentCalculatorStack);
                 var argumentValue = argumentCalculator.Execute(argument.Body);
 

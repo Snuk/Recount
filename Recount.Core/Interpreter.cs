@@ -28,7 +28,7 @@ namespace Recount.Core
 
             state = state.MoveToFinalState(expression.Length, _stack);
             state.Execute(_stack);
-            return _stack.GetResult()2;
+            return _stack.GetResult();
         }
     }
 }

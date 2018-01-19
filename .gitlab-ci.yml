@@ -1,0 +1,10 @@
+stages:
+    - build
+        
+job-new-release:
+    stage: build
+    script:
+      - export PROJECT_NAME=Recount.Console\Recount.Console.csproj
+      - dotnet restore
+      - dotnet build $PROJECT_NAME
+      

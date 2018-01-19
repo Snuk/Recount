@@ -2,12 +2,12 @@
 using Recount.Core.Lexemes;
 using Recount.Core.Symbols;
 
-namespace Recount.Core.AnalyserStates
+namespace Recount.Core.InterpreterStates
 {
-    public class FunctionBodyReadingState : AnalyserState
+    public class FunctionBodyReadingState : InterpreterState
     {
         private readonly Function _function;
-        private AnalyserState _validatorState;
+        private InterpreterState _validatorState;
         private readonly FunctionValidatorLexemesStack _validatorStack;
         private readonly LexemeBuilder _functionBodyBuilder;
 
@@ -19,7 +19,7 @@ namespace Recount.Core.AnalyserStates
             _functionBodyBuilder = new LexemeBuilder();
         }
 
-        public override AnalyserState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
         {
             _validatorState = _validatorState.MoveToNextState(symbol, _validatorStack);
             _validatorState.Execute(_validatorStack);

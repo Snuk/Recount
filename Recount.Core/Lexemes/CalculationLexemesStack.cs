@@ -96,6 +96,11 @@ namespace Recount.Core.Lexemes
             _variablesMap[name] = value;
         }
 
+        public Dictionary<Variable, Number> GetVariables()
+        {
+            return _variablesMap;
+        }
+
         public Function GetFunction(Variable name)
         {
             return _functionsMap[name];

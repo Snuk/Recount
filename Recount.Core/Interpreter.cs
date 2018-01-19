@@ -1,22 +1,22 @@
-﻿using Recount.Core.AnalyserStates;
+﻿using Recount.Core.InterpreterStates;
 using Recount.Core.Lexemes;
 using Recount.Core.Numbers;
 using Recount.Core.Symbols;
 
 namespace Recount.Core
 {
-    public class Calculator
+    public class Interpreter
     {
         private readonly ILexemesStack _stack;
 
-        public Calculator(ILexemesStack stack)
+        public Interpreter(ILexemesStack stack)
         {
             _stack = stack;
         }
 
-        public Number Calculate(string expression)
+        public Number Execute(string expression)
         {
-            var state = AnalyserState.StartFromInitialState(_stack);
+            var state = InterpreterState.StartFromInitialState(_stack);
 
             for (var index = 0; index < expression.Length; index++)
             {

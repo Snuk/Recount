@@ -4,7 +4,7 @@ namespace Recount.Core.Operators
 {
     public static class OperatorFactory
     {
-        internal static Operator CreateOperator(Symbol symbol, bool binary)
+        internal static Operator CreateOperator(Symbol symbol, bool binary = true)
         {
             switch (symbol.Value)
             {

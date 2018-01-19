@@ -1,36 +1,45 @@
 ﻿using Recount.Core.Lexemes;
+using Recount.Core.Numbers;
 using Recount.Core.Operators;
 using Recount.Core.Symbols;
 
-namespace Recount.Core.AnalyserStates
+namespace Recount.Core.InterpreterStates
 {
-    public class ClosingBracketOperatorState : AnalyserState
+    public class NumberReadingState : InterpreterState
     {
-        public override void Execute(ILexemesStack stack)
+        private readonly LexemeBuilder _numberBuilder;
+
+        public NumberReadingState(Symbol symbol)
         {
-            stack.PopOperators();
+            _numberBuilder = new LexemeBuilder(symbol);
         }
 
-        public override AnalyserState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
         {
             switch (symbol.Type)
             {
                 case SymbolType.Number:
+                    _numberBuilder.Append(symbol);
+                    return this;
+
                 case SymbolType.Identifier:
                     return new ErrorState(symbol);
 
                 case SymbolType.Operator:
-                    var @operator = OperatorFactory.CreateOperator(symbol, false);
+                    var @operator = OperatorFactory.CreateOperator(symbol);
+                    var number = NumberFactory.CreateNumber(_numberBuilder);
+
+                    stack.Push(number);
                     stack.Push(@operator);
 
                     switch (@operator)
                     {
-                        case ClosingBracket _:
-                            return new ClosingBracketOperatorState();
-                        case CommaOperator _:
                         case OpeningBracket _:
                         case AssignmentOperator _:
+                        case CommaOperator _:
                             return new ErrorState(symbol);
+                        case ClosingBracket _:
+                            return new ClosingBracketOperatorState();
                         default:
                             return new BinaryOperatorState();
                     }

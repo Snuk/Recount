@@ -3,9 +3,9 @@ using Recount.Core.Lexemes;
 using Recount.Core.Operators;
 using Recount.Core.Symbols;
 
-namespace Recount.Core.AnalyserStates
+namespace Recount.Core.InterpreterStates
 {
-    public class FunctionArgumentReadingState : AnalyserState
+    public class FunctionArgumentReadingState : InterpreterState
     {
         private readonly FunctionSignature _functionSignature;
         private readonly LexemeBuilder _argumentBuilder;
@@ -18,7 +18,7 @@ namespace Recount.Core.AnalyserStates
             _argumentBuilder = new LexemeBuilder(symbol);
         }
 
-        public override AnalyserState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
         {
             switch (symbol.Type)
             {
@@ -28,7 +28,7 @@ namespace Recount.Core.AnalyserStates
                     return this;
 
                 case SymbolType.Operator:
-                    var @operator = OperatorFactory.CreateOperator(symbol, false);
+                    var @operator = OperatorFactory.CreateOperator(symbol);
 
                     switch (@operator)
                     {

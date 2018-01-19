@@ -1,32 +1,37 @@
-﻿using Recount.Core.Lexemes;
+﻿using Recount.Core.Functions;
+using Recount.Core.Identifiers;
+using Recount.Core.Lexemes;
 using Recount.Core.Operators;
 using Recount.Core.Symbols;
 
-namespace Recount.Core.AnalyserStates
+namespace Recount.Core.InterpreterStates
 {
-    public class OpeningBracketOperatorState : AnalyserState
+    public class FunctionSignatureStartState : InterpreterState
     {
-        public override AnalyserState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        private readonly FunctionSignature _functionSignature;
+
+        public FunctionSignatureStartState(Variable functionName)
+        {
+            _functionSignature = new FunctionSignature(functionName);
+        }
+
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
         {
             switch (symbol.Type)
             {
                 case SymbolType.Number:
-                    return new NumberReadingState(symbol);
-
                 case SymbolType.Identifier:
-                    return new IdentifierReadingState(symbol);
+                    return new FunctionArgumentReadingState(_functionSignature, symbol);
 
                 case SymbolType.Operator:
                     var @operator = OperatorFactory.CreateOperator(symbol, false);
-                    stack.Push(@operator);
 
                     switch (@operator)
                     {
                         case OpeningBracket _:
-                            return new OpeningBracketOperatorState();
                         case PlusOperator _:
                         case MinusOperator _:
-                            return new UnaryOperatorState();
+                            return new FunctionArgumentReadingState(_functionSignature, symbol);
                         default:
                             return new ErrorState(symbol);
                     }

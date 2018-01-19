@@ -2,16 +2,16 @@
 using Recount.Core.Operators;
 using Recount.Core.Symbols;
 
-namespace Recount.Core.AnalyserStates
+namespace Recount.Core.InterpreterStates
 {
-    public class UnaryOperatorState : AnalyserState
+    public class UnaryOperatorState : InterpreterState
     {
         public override void Execute(ILexemesStack stack)
         {
             stack.PopOperators();
         }
 
-        public override AnalyserState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
         {
             switch (symbol.Type)
             {
@@ -22,7 +22,7 @@ namespace Recount.Core.AnalyserStates
                     return new IdentifierReadingState(symbol);
 
                 case SymbolType.Operator:
-                    var @operator = OperatorFactory.CreateOperator(symbol, false);
+                    var @operator = OperatorFactory.CreateOperator(symbol);
                     stack.Push(@operator);
 
                     switch (@operator)

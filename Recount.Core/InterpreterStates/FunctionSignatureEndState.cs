@@ -4,9 +4,9 @@ using Recount.Core.Numbers;
 using Recount.Core.Operators;
 using Recount.Core.Symbols;
 
-namespace Recount.Core.AnalyserStates
+namespace Recount.Core.InterpreterStates
 {
-    public class FunctionSignatureEndState : AnalyserState
+    public class FunctionSignatureEndState : InterpreterState
     {
         private readonly FunctionSignature _functionSignature;
 
@@ -15,7 +15,7 @@ namespace Recount.Core.AnalyserStates
             _functionSignature = functionSignature;
         }
 
-        public override AnalyserState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
         {
             switch (symbol.Type)
             {
@@ -24,7 +24,7 @@ namespace Recount.Core.AnalyserStates
                     return new ErrorState(symbol);
 
                 case SymbolType.Operator:
-                    var @operator = OperatorFactory.CreateOperator(symbol, false);
+                    var @operator = OperatorFactory.CreateOperator(symbol);
                     if (@operator is OpeningBracket || @operator is CommaOperator)
                     {
                         return new ErrorState(symbol);
@@ -41,7 +41,7 @@ namespace Recount.Core.AnalyserStates
                     }
 
                     var function = stack.GetFunction(_functionSignature.Name);
-                    var result = EvaluateFunction(_functionSignature, function);
+                    var result = EvaluateFunction(_functionSignature, function, stack);
 
                     stack.Push(result);
                     stack.Push(@operator);
@@ -58,7 +58,7 @@ namespace Recount.Core.AnalyserStates
             }
         }
 
-        private static Number EvaluateFunction(FunctionSignature signature, Function function)
+        private static Number EvaluateFunction(FunctionSignature signature, Function function, ILexemesStack stack)
         {
             var bodyCalculationStack = new CalculationLexemesStack();
 
@@ -67,14 +67,20 @@ namespace Recount.Core.AnalyserStates
                 var argument = signature.Arguments[index];
                 var parameter = function.Parameters[index];
 
-                var argumentCalculator = new Calculator(new CalculationLexemesStack());
-                var argumentValue = argumentCalculator.Calculate(argument.Body);
+                var argumentCalculatorStack = new CalculationLexemesStack();
+                foreach (var variable in stack.GetVariables())
+                {
+                    argumentCalculatorStack.AddVariable(variable.Key, variable.Value);
+                }
+
+                var argumentCalculator = new Interpreter(argumentCalculatorStack);
+                var argumentValue = argumentCalculator.Execute(argument.Body);
 
                 bodyCalculationStack.AddVariable(parameter, argumentValue);
             }
 
-            var bodyCalculator = new Calculator(bodyCalculationStack);
-            var functionValue = bodyCalculator.Calculate(function.Body);
+            var bodyCalculator = new Interpreter(bodyCalculationStack);
+            var functionValue = bodyCalculator.Execute(function.Body);
 
             return functionValue;
         }

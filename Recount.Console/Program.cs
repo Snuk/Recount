@@ -7,13 +7,13 @@ namespace Recount.Console
     {
         static void Main()
         {
-            var analyser = new Calculator(new CalculationLexemesStack());
+            var analyser = new Interpreter(new CalculationLexemesStack());
 
             while (true)
             {
                 try
                 {
-                    var result = analyser.Calculate(System.Console.ReadLine());
+                    var result = analyser.Execute(System.Console.ReadLine());
                     System.Console.WriteLine(result.Value);
                 }
                 catch (System.Exception ex)

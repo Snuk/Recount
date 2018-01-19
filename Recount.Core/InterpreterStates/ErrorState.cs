@@ -2,9 +2,9 @@
 using Recount.Core.Lexemes;
 using Recount.Core.Symbols;
 
-namespace Recount.Core.AnalyserStates
+namespace Recount.Core.InterpreterStates
 {
-    public class ErrorState : AnalyserState
+    public class ErrorState : InterpreterState
     {
         private readonly Symbol _errorSymbol;
 
@@ -18,7 +18,7 @@ namespace Recount.Core.AnalyserStates
             throw new Exception($"syntax error, symbol {_errorSymbol.Index}");
         }
 
-        public override AnalyserState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
         {
             throw new NotImplementedException();
         }

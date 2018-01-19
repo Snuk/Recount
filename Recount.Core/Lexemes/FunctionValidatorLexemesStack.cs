@@ -39,7 +39,6 @@ namespace Recount.Core.Lexemes
                 case Variable variable:
                     if (!_fiunctionParameters.Contains(variable))
                     {
-#warning sefesf
                         throw new Exception();
                     }
                     break;
@@ -54,7 +53,6 @@ namespace Recount.Core.Lexemes
 
             if (_bracketsBalance < 0)
             {
-#warning asdsafasf
                 throw new Exception( /*lexeme*/);
             }
         }
@@ -65,6 +63,11 @@ namespace Recount.Core.Lexemes
         }
 
         public void AddVariable(Variable name, Number value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<Variable, Number> GetVariables()
         {
             throw new NotImplementedException();
         }

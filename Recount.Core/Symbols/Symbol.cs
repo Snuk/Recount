@@ -8,7 +8,7 @@
 
         public SymbolType Type { get; }
 
-        public bool IsLast { get; set; }
+        public bool IsLast { get; }
 
         public Symbol(SymbolType type, char value, int index, bool isLast = false)
         {

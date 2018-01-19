@@ -4,9 +4,9 @@ using Recount.Core.Numbers;
 using Recount.Core.Operators;
 using Recount.Core.Symbols;
 
-namespace Recount.Core.AnalyserStates
+namespace Recount.Core.InterpreterStates
 {
-    public class IdentifierReadingState : AnalyserState
+    public class IdentifierReadingState : InterpreterState
     {
         private readonly LexemeBuilder _variableBuilder;
 
@@ -15,7 +15,7 @@ namespace Recount.Core.AnalyserStates
             _variableBuilder = new LexemeBuilder(symbol);
         }
 
-        public override AnalyserState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
         {
             switch (symbol.Type)
             {
@@ -30,7 +30,7 @@ namespace Recount.Core.AnalyserStates
                     return this;
 
                 case SymbolType.Operator:
-                    var @operator = OperatorFactory.CreateOperator(symbol, true);
+                    var @operator = OperatorFactory.CreateOperator(symbol);
                     var identifier = VariableFactory.CreateVariable(_variableBuilder);
 
                     if (@operator is OpeningBracket)

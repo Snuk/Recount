@@ -1,4 +1,5 @@
-﻿using Recount.Core.Functions;
+﻿using System.Collections.Generic;
+using Recount.Core.Functions;
 using Recount.Core.Identifiers;
 using Recount.Core.Numbers;
 
@@ -15,6 +16,8 @@ namespace Recount.Core.Lexemes
         void AddFunction(Function function);
 
         void AddVariable(Variable name, Number value);
+
+        Dictionary<Variable, Number> GetVariables();
 
         Function GetFunction(Variable name);
     }

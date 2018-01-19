@@ -5,7 +5,7 @@ job_build_dotnet:
     stage: build
     image: microsoft/dotnet:latest
     script:
-        - export PROJECT_NAME=Recount.Console\Recount.Console.csproj
+        - export PROJECT_NAME=Recount.Console\\Recount.Console.csproj
         - dotnet restore
         - dotnet build $PROJECT_NAME
       

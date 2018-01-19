@@ -8,4 +8,15 @@ job_build_dotnet:
         - export PROJECT_NAME=Recount.Console\\Recount.Console.csproj
         - dotnet restore
         - dotnet build $PROJECT_NAME
+        
+job_build_docker:
+       stage: build
+       image: docker:latest
+       script:
+        - docker login registry.gitlab.com
+        - docker build -t registry.gitlab.com/ivatkoegor/recount .
+        - docker push registry.gitlab.com/ivatkoegor/recount
+       dependencies:
+        - job_build_dotnet
+        
       

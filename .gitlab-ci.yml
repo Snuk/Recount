@@ -1,5 +1,6 @@
 stages:
     - build
+    - docker
         
 job_build_dotnet:
     stage: build
@@ -10,7 +11,7 @@ job_build_dotnet:
         - dotnet build $PROJECT_NAME
         
 job_build_docker:
-       stage: build
+       stage: docker
        image: docker:latest
        script:
         - docker login registry.gitlab.com

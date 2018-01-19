@@ -15,8 +15,8 @@ job_build_docker:
        image: docker:latest
        script:
         - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-        - docker build -t registry.gitlab.com/ivatkoegor/recount .
-        - docker push registry.gitlab.com/ivatkoegor/recount
+        - docker build -t registry.gitlab.com/snuk/recount .
+        - docker push registry.gitlab.com/snuk/recount
        dependencies:
         - job_build_dotnet
         

@@ -148,6 +148,23 @@ namespace Recount.Core.Lexemes
             }
         }
 
+        public CalculationLexemesStack Copy()
+        {
+            var stack = new CalculationLexemesStack();
+
+            foreach (var variable in _variablesMap)
+            {
+                stack.AddVariable(variable.Key, variable.Value);
+            }
+
+            foreach (var function in _functionsMap)
+            {
+                stack.AddFunction(function.Value);
+            }
+
+            return stack;
+        }
+
         private void Clear()
         {
             _bracketsBalance = 0;

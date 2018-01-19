@@ -6,18 +6,20 @@ namespace Recount.Core.Numbers
 {
     public static class NumberFactory
     {
-        public static readonly char Dividor;
+        public static readonly char DecimalSeparator;
+        private static readonly NumberFormatInfo NumberFormatInfo;
 
         static NumberFactory()
         {
-            Dividor = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            DecimalSeparator = '.';
+            NumberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = DecimalSeparator.ToString() };
         }
 
         public static Number CreateNumber(LexemeBuilder builder)
         {
             try
             {
-                return new Number(builder, double.Parse(builder.Body, CultureInfo.CurrentCulture));
+                return new Number(builder, double.Parse(builder.Body, NumberFormatInfo));
             }
             catch (FormatException)
             {
@@ -31,7 +33,7 @@ namespace Recount.Core.Numbers
 
         public static bool CheckSymbol(char symbol)
         {
-            return char.IsNumber(symbol) || symbol == Dividor;
+            return char.IsNumber(symbol) || symbol == DecimalSeparator;
         }
     }
 }

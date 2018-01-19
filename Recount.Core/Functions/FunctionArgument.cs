@@ -32,7 +32,7 @@ namespace Recount.Core.Functions
             for (var i = 1; i < body.Length; i++)
             {
                 if (!VariableFactory.CheckSymbol(body[i])
-                    && (!NumberFactory.CheckSymbol(body[i]) || body[i].Equals(NumberFactory.Dividor)))
+                    && (!NumberFactory.CheckSymbol(body[i]) || body[i].Equals(NumberFactory.DecimalSeparator)))
                 {
                     return false;
                 }

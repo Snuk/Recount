@@ -21,7 +21,7 @@ namespace Recount.Core.InterpreterStates
             {
                 case SymbolType.Number:
                 case SymbolType.Identifier:
-                    if (symbol.Value.Equals(NumberFactory.Dividor))
+                    if (symbol.Value.Equals(NumberFactory.DecimalSeparator))
                     {
                         return new ErrorState(symbol);
                     }

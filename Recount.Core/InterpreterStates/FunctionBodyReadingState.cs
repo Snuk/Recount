@@ -24,7 +24,7 @@ namespace Recount.Core.InterpreterStates
             _validatorState = _validatorState.MoveToNextState(symbol, _validatorStack);
             _validatorState.Execute(_validatorStack);
 
-            if (_validatorState is FunctionSignatureStartState)
+            if (_validatorState is FunctionSignatureStartState || _validatorState is AssignmentOperatorState)
             {
                 return new ErrorState(symbol);
             }

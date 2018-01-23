@@ -7,7 +7,7 @@ namespace Recount.Core.Numbers
     public static class NumberFactory
     {
         public static readonly char DecimalSeparator;
-        private static readonly NumberFormatInfo NumberFormatInfo;
+        public static readonly NumberFormatInfo NumberFormatInfo;
 
         static NumberFactory()
         {

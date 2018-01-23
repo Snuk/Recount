@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  recount.web:
+    image: recount.web
+    build:
+      context: .
+      dockerfile: Recount.Web/Dockerfile

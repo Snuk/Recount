@@ -19,5 +19,10 @@ namespace Recount.Core.Numbers
         {
             Value = value;
         }
+
+        public override string ToString()
+        {
+            return Value.ToString(NumberFactory.NumberFormatInfo);
+        }
     }
 }

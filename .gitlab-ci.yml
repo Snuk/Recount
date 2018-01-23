@@ -6,9 +6,8 @@ job_build_dotnet:
     stage: build
     image: microsoft/dotnet:latest
     script:
-        - export PROJECT_NAME=Recount.Web\\Recount.Web.csproj
         - dotnet restore
-        - dotnet build $PROJECT_NAME
+        - dotnet build Recount.sln
         
 job_build_docker:
        stage: docker

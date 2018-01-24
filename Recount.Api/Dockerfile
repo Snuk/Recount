@@ -2,7 +2,6 @@ FROM microsoft/aspnetcore:2.0 AS base
 WORKDIR /app
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://*:8080
-COPY Recount.Api/app.yml app.yml
 
 FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /src
@@ -18,5 +17,6 @@ RUN dotnet publish -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
+COPY Recount.Api/app.yml .
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "Recount.Api.dll"]

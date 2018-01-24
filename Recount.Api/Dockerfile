@@ -17,6 +17,6 @@ RUN dotnet publish -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
-COPY Recount.Api/app.yml .
+COPY Recount.Api/app.yml app.yml
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "Recount.Api.dll"]

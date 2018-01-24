@@ -16,8 +16,8 @@ job_build_docker:
         - docker:dind
        script:
         - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-        - docker build -t registry.gitlab.com/snuk/recount/recount.web .
-        - docker push registry.gitlab.com/snuk/recount/recount.web
+        - docker build -t registry.gitlab.com/snuk/recount . -f Recount.Web/Dockerfile
+        - docker push registry.gitlab.com/snuk/recount
        dependencies:
         - job_build_dotnet
         

@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  recount.web:
-    image: recount.web
+  recount.api:
+    image: recount.api
     build:
       context: .
-      dockerfile: Recount.Web/Dockerfile
+      dockerfile: Recount.Api/Dockerfile

@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Recount.Web": {
+    "Recount.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",

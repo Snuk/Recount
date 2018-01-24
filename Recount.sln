@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recount.Core", "Recount.Core\Recount.Core.csproj", "{87388027-7E4D-4C74-8ACF-D28AC9B3A0A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recount.Web", "Recount.Web\Recount.Web.csproj", "{201D19D8-A44F-4C02-812E-CCD510D79B4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recount.Api", "Recount.Web\Recount.Api.csproj", "{201D19D8-A44F-4C02-812E-CCD510D79B4F}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{AA347B42-97E6-4B63-84EC-43515E7A8C54}"
 EndProject

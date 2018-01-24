@@ -2,7 +2,7 @@
 using Recount.Core;
 using Recount.Core.Lexemes;
 
-namespace Recount.Web.Controllers
+namespace Recount.Api.Controllers
 {
     [Route("api/[controller]")]
     public class RecountController : Controller

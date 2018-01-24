@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Recount.Web
+namespace Recount.Api
 {
     public class Program
     {

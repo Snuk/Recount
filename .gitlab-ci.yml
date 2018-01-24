@@ -6,8 +6,8 @@ job_build_dotnet:
     stage: build
     image: microsoft/dotnet:latest
     script:
-        - dotnet restore Recount.Web\\Recount.Web.csproj
-        - dotnet build Recount.Web\\Recount.Web.csproj
+        - dotnet restore Recount.Api\\Recount.Api.csproj
+        - dotnet build Recount.Api\\Recount.Api.csproj
         
 job_build_docker:
        stage: docker
@@ -16,8 +16,8 @@ job_build_docker:
         - docker:dind
        script:
         - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-        - docker build -t registry.gitlab.com/snuk/recount . -f Recount.Web/Dockerfile
-        - docker push registry.gitlab.com/snuk/recount
+        - docker build -t registry.gitlab.com/snuk/recount/recount-api . -f Recount.Api/Dockerfile
+        - docker push registry.gitlab.com/snuk/recount/recount-api
        dependencies:
         - job_build_dotnet
         

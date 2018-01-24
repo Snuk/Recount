@@ -2,6 +2,7 @@ FROM microsoft/aspnetcore:2.0 AS base
 WORKDIR /app
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://*:8080
+COPY /app/app.yml app.yml
 
 FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /src

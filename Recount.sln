@@ -10,6 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7E059023-0DEB-43AF-AD78-33F97177C4BC}"
 	ProjectSection(SolutionItems) = preProject
 		.gitlab-ci.yml = .gitlab-ci.yml
+		app.yaml = app.yaml
+		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recount.Api", "Recount.Api\Recount.Api.csproj", "{482AEAF7-BD6F-4913-9EC4-5861D84BCA4E}"

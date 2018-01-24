@@ -6,7 +6,7 @@ job_build_dotnet:
     stage: build
     image: microsoft/dotnet:latest
     script:
-        - dotnet restore
+        - dotnet restore Recount.sln
         - dotnet build Recount.sln
         
 job_build_docker:

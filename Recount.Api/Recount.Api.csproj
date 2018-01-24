@@ -22,4 +22,10 @@
     <ProjectReference Include="..\Recount.Core\Recount.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="app.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

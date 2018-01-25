@@ -10,18 +10,18 @@ namespace Recount.Core.Lexemes
 {
     public class CalculationLexemesStack : ILexemesStack
     {
+        private readonly IVariablesProvider _variablesProvider;
+        private readonly IFunctionsProvider _functionsProvider;
         private readonly List<Operator> _operators;
         private readonly List<Lexeme> _operands;
         private readonly List<Variable> _variables;
-        private readonly Dictionary<Variable, Number> _variablesMap;
-        private readonly Dictionary<Variable, Function> _functionsMap;
 
         private int _bracketsBalance;
 
-        public CalculationLexemesStack()
+        public CalculationLexemesStack(IVariablesProvider variablesProvider, IFunctionsProvider functionsProvider)
         {
-            _functionsMap = new Dictionary<Variable, Function>();
-            _variablesMap = new Dictionary<Variable, Number>();
+            _variablesProvider = variablesProvider;
+            _functionsProvider = functionsProvider;
             _operators = new List<Operator>();
             _operands = new List<Lexeme>();
             _variables = new List<Variable>();
@@ -88,22 +88,17 @@ namespace Recount.Core.Lexemes
 
         public void AddFunction(Function function)
         {
-            _functionsMap[function.Name] = function;
+            _functionsProvider.Add(function);
         }
 
         public void AddVariable(Variable name, Number value)
         {
-            _variablesMap[name] = value;
-        }
-
-        public Dictionary<Variable, Number> GetVariables()
-        {
-            return _variablesMap;
+            _variablesProvider.Add(name, value);
         }
 
         public Function GetFunction(Variable name)
         {
-            return _functionsMap[name];
+            return _functionsProvider.Get(name);
         }
 
         public void PopOperators()
@@ -119,7 +114,7 @@ namespace Recount.Core.Lexemes
                     var number = PopNumber();
                     if (PopOperand() is Variable variable)
                     {
-                        _variablesMap[variable] = number;
+                        _variablesProvider.Add(variable, number);
                         Push(number);
                         continue;
                     }
@@ -150,19 +145,7 @@ namespace Recount.Core.Lexemes
 
         public CalculationLexemesStack Copy()
         {
-            var stack = new CalculationLexemesStack();
-
-            foreach (var variable in _variablesMap)
-            {
-                stack.AddVariable(variable.Key, variable.Value);
-            }
-
-            foreach (var function in _functionsMap)
-            {
-                stack.AddFunction(function.Value);
-            }
-
-            return stack;
+            return new CalculationLexemesStack(_variablesProvider, _functionsProvider);
         }
 
         private void Clear()
@@ -211,8 +194,8 @@ namespace Recount.Core.Lexemes
                 case Number number:
                     return number;
 
-                case Variable variable when _variablesMap.ContainsKey(variable):
-                    return _variablesMap[variable];
+                case Variable variable:
+                    return _variablesProvider.Get(variable);
             }
 
             throw new Exception();

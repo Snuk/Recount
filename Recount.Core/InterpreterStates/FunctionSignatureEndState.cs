@@ -60,7 +60,7 @@ namespace Recount.Core.InterpreterStates
 
         private static Number EvaluateFunction(FunctionSignature signature, Function function, ILexemesStack stack)
         {
-            var bodyCalculationStack = new CalculationLexemesStack();
+            var bodyCalculationStack = new CalculationLexemesStack(new MemoryVariablesProvider(), new MemoryFunctionsProvider());
 
             for (var index = 0; index < signature.Arguments.Count; index++)
             {

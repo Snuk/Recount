@@ -2,11 +2,11 @@
 {
     public class Lexeme
     {
-        public int StartIndex { get; }
+        public int StartIndex { get; set; }
 
-        public int EndIndex { get; }
+        public int EndIndex { get; set; }
 
-        public string Body { get; }
+        public string Body { get; set; }
 
         protected Lexeme(LexemeBuilder builder)
         {

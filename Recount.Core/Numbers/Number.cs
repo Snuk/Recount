@@ -5,7 +5,7 @@ namespace Recount.Core.Numbers
 {
     public class Number : Lexeme
     {
-        public double Value { get; }
+        public double Value { get; set; }
 
 #warning sefsgrsdgrgd
         public Number(double value)

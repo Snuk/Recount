@@ -67,11 +67,6 @@ namespace Recount.Core.Lexemes
             throw new NotImplementedException();
         }
 
-        public Dictionary<Variable, Number> GetVariables()
-        {
-            throw new NotImplementedException();
-        }
-
         public Function GetFunction(Variable name)
         {
             throw new NotImplementedException();

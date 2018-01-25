@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Recount.DataAccess\Recount.DataAccess.csproj" />
     <ProjectReference Include="..\Recount.Core\Recount.Core.csproj" />
+    <ProjectReference Include="..\Recount.DataAccess\Recount.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

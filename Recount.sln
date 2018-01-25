@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recount.Api", "Recount.Api\Recount.Api.csproj", "{482AEAF7-BD6F-4913-9EC4-5861D84BCA4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recount.DataAccess", "..\Recount.DataAccess\Recount.DataAccess.csproj", "{71234C62-8EEE-464C-B616-0607CAE9C88D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recount.DataAccess", "Recount.DataAccess\Recount.DataAccess.csproj", "{1FDA4457-F32A-469B-B8BA-3D8BAE17BFCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +36,10 @@ Global
 		{482AEAF7-BD6F-4913-9EC4-5861D84BCA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{482AEAF7-BD6F-4913-9EC4-5861D84BCA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{482AEAF7-BD6F-4913-9EC4-5861D84BCA4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71234C62-8EEE-464C-B616-0607CAE9C88D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71234C62-8EEE-464C-B616-0607CAE9C88D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71234C62-8EEE-464C-B616-0607CAE9C88D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71234C62-8EEE-464C-B616-0607CAE9C88D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FDA4457-F32A-469B-B8BA-3D8BAE17BFCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FDA4457-F32A-469B-B8BA-3D8BAE17BFCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FDA4457-F32A-469B-B8BA-3D8BAE17BFCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FDA4457-F32A-469B-B8BA-3D8BAE17BFCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

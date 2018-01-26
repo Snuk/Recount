@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using MongoDB.Driver;
 using Recount.Core.Functions;
-using Recount.Core.Identifiers;
 using Recount.Core.Lexemes;
+using Recount.Core.Variables;
 
 namespace Recount.DataAccess.Providers
 {
@@ -13,7 +13,7 @@ namespace Recount.DataAccess.Providers
 
         public MongoFunctionsProvider()
         {
-            _functionsCollection = new MongoClient(new MongoUrl("mongodb://mongodb-1-servers-vm-0:27017")).GetDatabase("recount")
+            _functionsCollection = new MongoClient(new MongoUrl("mongodb://localhost:27017")).GetDatabase("recount")
                 .GetCollection<Function>("functions");
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Recount.Core.Exceptions;
 using Recount.Core.Lexemes;
 using Recount.Core.Symbols;
 
@@ -15,7 +16,7 @@ namespace Recount.Core.InterpreterStates
 
         public override void Execute(ILexemesStack stack)
         {
-            throw new Exception($"syntax error, symbol {_errorSymbol.Index}");
+            throw new SyntaxException(_errorSymbol);
         }
 
         public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)

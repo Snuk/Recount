@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Recount.Core.Exceptions;
 using Recount.Core.Lexemes;
 
 namespace Recount.Core.Numbers
@@ -21,13 +22,9 @@ namespace Recount.Core.Numbers
             {
                 return new Number(builder, double.Parse(builder.Body, NumberFormatInfo));
             }
-            catch (FormatException)
+            catch (Exception)
             {
-                throw new Exception("ошибка при записи числа");
-            }
-            catch (OverflowException)
-            {
-                throw new Exception("слишком большое/маленькое число");
+                throw new SyntaxException(builder);
             }
         }
 

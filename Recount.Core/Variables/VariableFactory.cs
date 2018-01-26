@@ -1,6 +1,6 @@
 ﻿using Recount.Core.Lexemes;
 
-namespace Recount.Core.Identifiers
+namespace Recount.Core.Variables
 {
     public static class VariableFactory
     {

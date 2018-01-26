@@ -1,7 +1,7 @@
-﻿using System;
-using Recount.Core.Identifiers;
+﻿using Recount.Core.Exceptions;
 using Recount.Core.Numbers;
 using Recount.Core.Operators;
+using Recount.Core.Variables;
 
 namespace Recount.Core.Symbols
 {
@@ -15,7 +15,13 @@ namespace Recount.Core.Symbols
 
         public static Symbol CreateSymbol(char value, int index, bool isLast = false)
         {
-            return new Symbol(GetSymbolType(value), value, index, isLast);
+            var type = GetSymbolType(value);
+            if (type == SymbolType.Undefined)
+            {
+                throw new SyntaxException(index, value);
+            }
+
+            return new Symbol(type, value, index, isLast);
         }
 
         private static SymbolType GetSymbolType(char value)
@@ -35,7 +41,7 @@ namespace Recount.Core.Symbols
                 return SymbolType.Identifier;
             }
 
-            throw new Exception();
+            return SymbolType.Undefined;
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Recount.Core.Exceptions;
 using Recount.Core.Functions;
-using Recount.Core.Identifiers;
 using Recount.Core.Numbers;
 using Recount.Core.Operators;
+using Recount.Core.Variables;
 
 namespace Recount.Core.Lexemes
 {
@@ -12,9 +13,8 @@ namespace Recount.Core.Lexemes
     {
         private readonly IVariablesProvider _variablesProvider;
         private readonly IFunctionsProvider _functionsProvider;
-        private readonly List<Operator> _operators;
-        private readonly List<Lexeme> _operands;
-        private readonly List<Variable> _variables;
+        private readonly Stack<Operator> _operators;
+        private readonly Stack<Lexeme> _operands;
 
         private int _bracketsBalance;
 
@@ -22,9 +22,8 @@ namespace Recount.Core.Lexemes
         {
             _variablesProvider = variablesProvider;
             _functionsProvider = functionsProvider;
-            _operators = new List<Operator>();
-            _operands = new List<Lexeme>();
-            _variables = new List<Variable>();
+            _operators = new Stack<Operator>();
+            _operands = new Stack<Lexeme>();
         }
 
         public Number GetResult()
@@ -33,19 +32,16 @@ namespace Recount.Core.Lexemes
             {
                 if (_bracketsBalance != 0)
                 {
-#warning
+#warning fsdfds
                     throw new Exception( /*lexeme*/);
                 }
 
                 var result = PopNumber();
 
-                var validState = _operators.Count == 0 && _variables.Count == 0 && _operands.Count == 0;
-                if (validState)
-                {
-                    return result;
-                }
+                var validState = _operators.Count == 0 && _operands.Count == 0;
 
-                throw new Exception();
+#warning sdfgsdgs
+                return validState ? result : throw new Exception();
             }
             finally
             {
@@ -58,10 +54,10 @@ namespace Recount.Core.Lexemes
             switch (lexeme)
             {
                 case Number number:
-                    _operands.Add(number);
+                    _operands.Push(number);
                     break;
                 case Variable variable:
-                    _operands.Add(variable);
+                    _operands.Push(variable);
                     break;
                 case Operator @operator:
 
@@ -77,11 +73,10 @@ namespace Recount.Core.Lexemes
 
                     if (_bracketsBalance < 0)
                     {
-#warning
-                        throw new Exception( /*lexeme*/);
+                        throw new SyntaxException(lexeme);
                     }
 
-                    _operators.Add(@operator);
+                    _operators.Push(@operator);
                     break;
             }
         }
@@ -103,23 +98,26 @@ namespace Recount.Core.Lexemes
 
         public void PopOperators()
         {
-            var @operator = PopOperator();
+            var lastOperator = PopOperator();
 
-            while (PeekOperator() != null && PeekOperator() > @operator)
+            while (PeekOperator() != null && PeekOperator() > lastOperator)
             {
                 var previousOperator = PopOperator();
 
                 if (previousOperator is AssignmentOperator)
                 {
                     var number = PopNumber();
-                    if (PopOperand() is Variable variable)
+                    var secondOperand = PopOperand();
+                    if (secondOperand is Variable variable)
                     {
                         _variablesProvider.Add(variable, number);
                         Push(number);
                         continue;
                     }
-
-                    throw new Exception();
+                    else
+                    {
+                        throw new SyntaxException(secondOperand);
+                    }
                 }
 
                 var result = previousOperator.Binary
@@ -127,19 +125,20 @@ namespace Recount.Core.Lexemes
                                  : previousOperator.ExecuteUnary(PopNumber().Value);
 
                 var lexeme = new Number(result);
-                _operands.Add(lexeme);
+                _operands.Push(lexeme);
             }
 
-            if (@operator is ClosingBracket)
+            if (lastOperator is ClosingBracket)
             {
-                if (!(PopOperator() is OpeningBracket))
+                var previousOperator = PopOperator();
+                if (!(previousOperator is OpeningBracket))
                 {
-                    throw new Exception();
+                    throw new SyntaxException(previousOperator);
                 }
             }
             else
             {
-                Push(@operator);
+                Push(lastOperator);
             }
         }
 
@@ -153,19 +152,18 @@ namespace Recount.Core.Lexemes
             _bracketsBalance = 0;
             _operators.Clear();
             _operands.Clear();
-            _variables.Clear();
         }
 
         private Operator PeekOperator()
         {
-            return _operators.LastOrDefault();
+            return _operators.Peek();
         }
 
         private Operator PopOperator()
         {
-            var @operator = _operators.LastOrDefault();
+            var lastOperator = _operators.Pop();
 
-            switch (@operator)
+            switch (lastOperator)
             {
                 case OpeningBracket _:
                     _bracketsBalance--;
@@ -175,15 +173,12 @@ namespace Recount.Core.Lexemes
                     break;
             }
 
-            _operators.RemoveAt(_operators.Count - 1);
-            return @operator;
+            return lastOperator;
         }
 
         private Lexeme PopOperand()
         {
-            var lastNumber = _operands.LastOrDefault();
-            _operands.RemoveAt(_operands.Count - 1);
-            return lastNumber;
+            return _operands.Pop();
         }
 
         private Number PopNumber()
@@ -198,7 +193,7 @@ namespace Recount.Core.Lexemes
                     return _variablesProvider.Get(variable);
             }
 
-            throw new Exception();
+            throw new SyntaxException(operand);
         }
     }
 }

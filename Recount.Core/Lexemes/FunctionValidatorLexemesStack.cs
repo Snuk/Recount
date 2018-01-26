@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using Recount.Core.Exceptions;
 using Recount.Core.Functions;
-using Recount.Core.Identifiers;
 using Recount.Core.Numbers;
 using Recount.Core.Operators;
+using Recount.Core.Variables;
 
 namespace Recount.Core.Lexemes
 {
     public class FunctionValidatorLexemesStack : ILexemesStack
     {
-        private readonly List<Variable> _fiunctionParameters;
+        private readonly List<Variable> _functionParameters;
         private int _bracketsBalance;
 
-        public FunctionValidatorLexemesStack(List<Variable> fiunctionParameters)
+        public FunctionValidatorLexemesStack(List<Variable> functionParameters)
         {
-            _fiunctionParameters = fiunctionParameters;
+            _functionParameters = functionParameters;
             _bracketsBalance = 0;
         }
 
@@ -37,15 +38,16 @@ namespace Recount.Core.Lexemes
             switch (lexeme)
             {
                 case Variable variable:
-                    if (!_fiunctionParameters.Contains(variable))
+                    if (!_functionParameters.Contains(variable))
                     {
-                        throw new Exception();
+                        throw new SyntaxException(lexeme);
                     }
                     break;
 
                 case OpeningBracket _:
                     _bracketsBalance++;
                     break;
+
                 case ClosingBracket _:
                     _bracketsBalance--;
                     break;
@@ -53,7 +55,7 @@ namespace Recount.Core.Lexemes
 
             if (_bracketsBalance < 0)
             {
-                throw new Exception( /*lexeme*/);
+                throw new SyntaxException(lexeme);
             }
         }
 

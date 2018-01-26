@@ -1,34 +1,32 @@
 ﻿using System.Collections.Generic;
-using Recount.Core.Numbers;
-using Recount.Core.Variables;
 
 namespace Recount.Core.Lexemes
 {
     public class MemoryVariablesProvider : IVariablesProvider
     {
-        private readonly Dictionary<Variable, Number> _variables;
+        private readonly Dictionary<string, double> _variables;
 
         public MemoryVariablesProvider()
         {
-            _variables = new Dictionary<Variable, Number>();
+            _variables = new Dictionary<string, double>();
         }
 
-        public void Add(Variable name, Number value)
+        public void Add(string name, double value)
         {
             _variables[name] = value;
         }
 
-        public Number Get(Variable name)
+        public double Get(string name)
         {
             return _variables[name];
         }
 
-        Dictionary<Variable, Number> IVariablesProvider.GetAll()
+        public Dictionary<string, double> GetAll()
         {
             return _variables;
         }
 
-        public void Delete(Variable name)
+        public void Delete(string name)
         {
             _variables.Remove(name);
         }

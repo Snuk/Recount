@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
-using Recount.Core.Numbers;
-using Recount.Core.Variables;
 
 namespace Recount.Core.Lexemes
 {
     public interface IVariablesProvider
     {
-        void Add(Variable name, Number value);
+        void Add(string name, double value);
 
-        Number Get(Variable name);
+        double Get(string name);
 
-        Dictionary<Variable, Number> GetAll();
+        Dictionary<string, double> GetAll();
 
-        void Delete(Variable name);
+        void Delete(string name);
     }
 }

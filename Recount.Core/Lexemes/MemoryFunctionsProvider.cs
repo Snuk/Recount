@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Recount.Core.Functions;
-using Recount.Core.Variables;
 
 namespace Recount.Core.Lexemes
 {
     public class MemoryFunctionsProvider : IFunctionsProvider
     {
-        private readonly Dictionary<Variable, Function> _functions;
+        private readonly Dictionary<string, Function> _functions;
 
         public MemoryFunctionsProvider()
         {
-            _functions = new Dictionary<Variable, Function>();
+            _functions = new Dictionary<string, Function>();
         }
 
         public void Add(Function function)
@@ -19,7 +18,7 @@ namespace Recount.Core.Lexemes
             _functions[function.Name] = function;
         }
 
-        public Function Get(Variable name)
+        public Function Get(string name)
         {
             return _functions[name];
         }
@@ -29,7 +28,7 @@ namespace Recount.Core.Lexemes
             return _functions.Values.ToList();
         }
 
-        public void Delete(Variable name)
+        public void Delete(string name)
         {
             _functions.Remove(name);
         }

@@ -2,7 +2,6 @@
 using MongoDB.Driver;
 using Recount.Core.Functions;
 using Recount.Core.Lexemes;
-using Recount.Core.Variables;
 
 namespace Recount.DataAccess.Providers
 {
@@ -19,12 +18,12 @@ namespace Recount.DataAccess.Providers
 
         public void Add(Function function)
         {
-            _functionsCollection.ReplaceOne(f => f.Name.Body == function.Name.Body, function, new UpdateOptions { IsUpsert = true });
+            _functionsCollection.ReplaceOne(f => f.Name == function.Name, function, new UpdateOptions { IsUpsert = true });
         }
 
-        public Function Get(Variable name)
+        public Function Get(string name)
         {
-            return _functionsCollection.Find(f => f.Name.Body == name.Body).Project<Function>(Builders<Function>.Projection.Exclude("_id"))
+            return _functionsCollection.Find(f => f.Name == name).Project<Function>(Builders<Function>.Projection.Exclude("_id"))
                 .First();
         }
 
@@ -34,9 +33,9 @@ namespace Recount.DataAccess.Providers
                 .Project<Function>(Builders<Function>.Projection.Exclude("_id")).ToList();
         }
 
-        public void Delete(Variable name)
+        public void Delete(string name)
         {
-            _functionsCollection.DeleteOneAsync(f => f.Name.Body == name.Body);
+            _functionsCollection.DeleteOneAsync(f => f.Name == name);
         }
     }
 }

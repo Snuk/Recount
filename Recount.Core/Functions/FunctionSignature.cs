@@ -29,7 +29,7 @@ namespace Recount.Core.Functions
 
         public Function ConvertToFunction()
         {
-            return new Function { Name = Name, Parameters = Arguments.Select(a => a.ConvertToParameter()).ToList() };
+            return new Function { Name = Name.Body, Parameters = Arguments.Select(a => a.ToString()).ToList() };
         }
     }
 }

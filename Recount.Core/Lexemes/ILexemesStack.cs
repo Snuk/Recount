@@ -1,12 +1,10 @@
 ﻿using Recount.Core.Functions;
-using Recount.Core.Numbers;
-using Recount.Core.Variables;
 
 namespace Recount.Core.Lexemes
 {
     public interface ILexemesStack
     {
-        Number GetResult();
+        double? GetResult();
 
         void PopOperators();
 
@@ -14,9 +12,9 @@ namespace Recount.Core.Lexemes
 
         void AddFunction(Function function);
 
-        void AddVariable(Variable name, Number value);
+        void AddVariable(string name, double value);
 
-        Function GetFunction(Variable name);
+        Function GetFunction(string name);
 
         CalculationLexemesStack Copy();
     }

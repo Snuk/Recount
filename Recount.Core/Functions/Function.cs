@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Recount.Core.Variables;
 
 namespace Recount.Core.Functions
 {
     public class Function
     {
-        public Variable Name { get; set; }
+        public string Name { get; set; }
 
-        public List<Variable> Parameters { get; set; }
+        public List<string> Parameters { get; set; }
 
         public string Body { get; set; }
 
         public Function()
         {
-            Parameters = new List<Variable>();
+            Parameters = new List<string>();
         }
 
         public override string ToString()

@@ -40,7 +40,7 @@ namespace Recount.Core.InterpreterStates
                         return new ErrorState(symbol);
                     }
 
-                    var function = stack.GetFunction(_functionSignature.Name);
+                    var function = stack.GetFunction(_functionSignature.Name.Body);
                     var result = EvaluateFunction(_functionSignature, function, stack);
 
                     stack.Push(result);
@@ -77,7 +77,7 @@ namespace Recount.Core.InterpreterStates
             var bodyCalculator = new Interpreter(bodyCalculationStack);
             var functionValue = bodyCalculator.Execute(function.Body);
 
-            return functionValue;
+            return new Number(functionValue);
         }
     }
 }

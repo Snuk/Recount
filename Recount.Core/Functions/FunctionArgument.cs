@@ -41,9 +41,9 @@ namespace Recount.Core.Functions
             return true;
         }
 
-        public Variable ConvertToParameter()
+        public override string ToString()
         {
-            return VariableFactory.CreateVariable(_builder);
+            return _builder.Body;
         }
     }
 }

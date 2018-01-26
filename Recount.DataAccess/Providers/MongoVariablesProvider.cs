@@ -2,8 +2,6 @@
 using System.Linq;
 using MongoDB.Driver;
 using Recount.Core.Lexemes;
-using Recount.Core.Numbers;
-using Recount.Core.Variables;
 
 namespace Recount.DataAccess.Providers
 {
@@ -18,37 +16,37 @@ namespace Recount.DataAccess.Providers
                 .GetCollection<VariableEntity>("variables");
         }
 
-        public void Add(Variable name, Number value)
+        public void Add(string name, double value)
         {
             _variablesCollection.ReplaceOne(
-                v => v.Name.Body == name.Body,
+                v => v.Name == name,
                 new VariableEntity { Name = name, Value = value },
                 new UpdateOptions { IsUpsert = true });
         }
 
-        public Number Get(Variable name)
+        public double Get(string name)
         {
-            return _variablesCollection.Find(v => v.Name.Body == name.Body)
+            return _variablesCollection.Find(v => v.Name == name)
                 .Project<VariableEntity>(Builders<VariableEntity>.Projection.Exclude("_id")).First().Value;
         }
 
-        public Dictionary<Variable, Number> GetAll()
+        public Dictionary<string, double> GetAll()
         {
             return _variablesCollection.Find(FilterDefinition<VariableEntity>.Empty)
                 .Project<VariableEntity>(Builders<VariableEntity>.Projection.Exclude("_id")).ToEnumerable()
                 .ToDictionary(v => v.Name, v => v.Value);
         }
 
-        public void Delete(Variable name)
+        public void Delete(string name)
         {
-            _variablesCollection.DeleteOne(v => v.Name.Body == name.Body);
+            _variablesCollection.DeleteOne(v => v.Name == name);
         }
 
         private class VariableEntity
         {
-            public Variable Name { get; set; }
+            public string Name { get; set; }
 
-            public Number Value { get; set; }
+            public double Value { get; set; }
         }
     }
 }

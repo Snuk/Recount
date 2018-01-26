@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Recount.Core.Exceptions;
 using Recount.Core.Functions;
 using Recount.Core.Numbers;
@@ -26,22 +25,15 @@ namespace Recount.Core.Lexemes
             _operands = new Stack<Lexeme>();
         }
 
-        public Number GetResult()
+        public double? GetResult()
         {
             try
             {
-                if (_bracketsBalance != 0)
-                {
-#warning fsdfds
-                    throw new Exception( /*lexeme*/);
-                }
-
-                var result = PopNumber();
-
-                var validState = _operators.Count == 0 && _operands.Count == 0;
-
-#warning sdfgsdgs
-                return validState ? result : throw new Exception();
+                return PopNumber();
+            }
+            catch (Exception)
+            {
+                return null;
             }
             finally
             {
@@ -86,12 +78,12 @@ namespace Recount.Core.Lexemes
             _functionsProvider.Add(function);
         }
 
-        public void AddVariable(Variable name, Number value)
+        public void AddVariable(string name, double value)
         {
             _variablesProvider.Add(name, value);
         }
 
-        public Function GetFunction(Variable name)
+        public Function GetFunction(string name)
         {
             return _functionsProvider.Get(name);
         }
@@ -110,8 +102,8 @@ namespace Recount.Core.Lexemes
                     var secondOperand = PopOperand();
                     if (secondOperand is Variable variable)
                     {
-                        _variablesProvider.Add(variable, number);
-                        Push(number);
+                        _variablesProvider.Add(variable.Body, number);
+                        Push(new Number(number));
                         continue;
                     }
                     else
@@ -121,8 +113,8 @@ namespace Recount.Core.Lexemes
                 }
 
                 var result = previousOperator.Binary
-                                 ? previousOperator.ExecuteBinary(PopNumber().Value, PopNumber().Value)
-                                 : previousOperator.ExecuteUnary(PopNumber().Value);
+                                 ? previousOperator.ExecuteBinary(PopNumber(), PopNumber())
+                                 : previousOperator.ExecuteUnary(PopNumber());
 
                 var lexeme = new Number(result);
                 _operands.Push(lexeme);
@@ -181,16 +173,16 @@ namespace Recount.Core.Lexemes
             return _operands.Pop();
         }
 
-        private Number PopNumber()
+        private double PopNumber()
         {
             var operand = PopOperand();
             switch (operand)
             {
                 case Number number:
-                    return number;
+                    return number.Value;
 
                 case Variable variable:
-                    return _variablesProvider.Get(variable);
+                    return _variablesProvider.Get(variable.Body);
             }
 
             throw new SyntaxException(operand);

@@ -1,6 +1,5 @@
 ﻿using Recount.Core.InterpreterStates;
 using Recount.Core.Lexemes;
-using Recount.Core.Numbers;
 using Recount.Core.Symbols;
 
 namespace Recount.Core
@@ -14,7 +13,7 @@ namespace Recount.Core
             _stack = stack;
         }
 
-        public Number Execute(string expression)
+        public double Execute(string expression)
         {
             var state = InterpreterState.StartFromInitialState(_stack);
 

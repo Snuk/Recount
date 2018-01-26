@@ -14,9 +14,9 @@ namespace Recount.Core.InterpreterStates
             return new OpeningBracketOperatorState();
         }
 
-        public InterpreterState MoveToFinalState(int expressionLength, ILexemesStack stack)
+        public InterpreterState MoveToFinalState(int lastSymbolIndex, ILexemesStack stack)
         {
-            var lastSymbol = SymbolFactory.CreateSymbol(')', expressionLength);
+            var lastSymbol = SymbolFactory.CreateSymbol(')', lastSymbolIndex);
             return MoveToNextState(lastSymbol, stack);
         }
 

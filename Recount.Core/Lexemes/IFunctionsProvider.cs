@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Recount.Core.Functions;
-using Recount.Core.Variables;
 
 namespace Recount.Core.Lexemes
 {
@@ -8,10 +7,10 @@ namespace Recount.Core.Lexemes
     {
         void Add(Function function);
 
-        Function Get(Variable name);
+        Function Get(string name);
 
         List<Function> GetAll();
 
-        void Delete(Variable name);
+        void Delete(string name);
     }
 }

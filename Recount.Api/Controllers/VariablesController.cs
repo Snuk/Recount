@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Recount.Core.Numbers;
-using Recount.Core.Variables;
 using Recount.DataAccess.Providers;
 
 namespace Recount.Api.Controllers
@@ -13,7 +11,7 @@ namespace Recount.Api.Controllers
         private readonly MongoVariablesProvider _variablesProvider = new MongoVariablesProvider();
 
         [HttpGet]
-        public Dictionary<Variable, Number> Get()
+        public Dictionary<string, double> Get()
         {
             return _variablesProvider.GetAll();
         }

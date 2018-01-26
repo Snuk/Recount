@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Recount.Core.Exceptions;
 using Recount.Core.Functions;
-using Recount.Core.Numbers;
 using Recount.Core.Operators;
 using Recount.Core.Variables;
 
@@ -10,10 +9,10 @@ namespace Recount.Core.Lexemes
 {
     public class FunctionValidatorLexemesStack : ILexemesStack
     {
-        private readonly List<Variable> _functionParameters;
+        private readonly List<string> _functionParameters;
         private int _bracketsBalance;
 
-        public FunctionValidatorLexemesStack(List<Variable> functionParameters)
+        public FunctionValidatorLexemesStack(List<string> functionParameters)
         {
             _functionParameters = functionParameters;
             _bracketsBalance = 0;
@@ -24,7 +23,7 @@ namespace Recount.Core.Lexemes
             return _bracketsBalance == 0;
         }
 
-        public Number GetResult()
+        public double? GetResult()
         {
             throw new NotImplementedException();
         }
@@ -38,7 +37,7 @@ namespace Recount.Core.Lexemes
             switch (lexeme)
             {
                 case Variable variable:
-                    if (!_functionParameters.Contains(variable))
+                    if (!_functionParameters.Contains(variable.Body))
                     {
                         throw new SyntaxException(lexeme);
                     }
@@ -64,12 +63,12 @@ namespace Recount.Core.Lexemes
             throw new NotImplementedException();
         }
 
-        public void AddVariable(Variable name, Number value)
+        public void AddVariable(string name, double value)
         {
             throw new NotImplementedException();
         }
 
-        public Function GetFunction(Variable name)
+        public Function GetFunction(string name)
         {
             throw new NotImplementedException();
         }

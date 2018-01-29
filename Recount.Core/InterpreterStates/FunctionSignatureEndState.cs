@@ -71,13 +71,13 @@ namespace Recount.Core.InterpreterStates
                 var argumentCalculator = new Interpreter(argumentCalculatorStack);
                 var argumentValue = argumentCalculator.Execute(argument.Body);
 
-                bodyCalculationStack.AddVariable(parameter, argumentValue);
+                bodyCalculationStack.AddVariable(parameter, argumentValue.Value);
             }
 
             var bodyCalculator = new Interpreter(bodyCalculationStack);
             var functionValue = bodyCalculator.Execute(function.Body);
 
-            return new Number(functionValue);
+            return new Number(functionValue.Value);
         }
     }
 }

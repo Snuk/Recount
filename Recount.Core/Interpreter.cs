@@ -13,7 +13,7 @@ namespace Recount.Core
             _stack = stack;
         }
 
-        public double Execute(string expression)
+        public double? Execute(string expression)
         {
             var state = InterpreterState.StartFromInitialState(_stack);
 

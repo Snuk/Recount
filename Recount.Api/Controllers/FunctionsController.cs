@@ -22,11 +22,11 @@ namespace Recount.Api.Controllers
             return _functionsProvider.GetAll();
         }
 
-        //[HttpGet("{name}", Name = "Get")]
-        //public Function Get(string name)
-        //{
-        //    return _functionsProvider.Get(name);
-        //}
+        [HttpGet("{name}")]
+        public Function Get(string name)
+        {
+            return _functionsProvider.Get(name);
+        }
 
         [HttpPost]
         public void Post([FromBody] Function function)
@@ -40,10 +40,10 @@ namespace Recount.Api.Controllers
             _functionsProvider.Add(function);
         }
 
-        //[HttpDelete("{name}")]
-        //public void Delete(string name)
-        //{
-        //    _functionsProvider.Delete(name);
-        //}
+        [HttpDelete("{name}")]
+        public void Delete(string name)
+        {
+            _functionsProvider.Delete(name);
+        }
     }
 }

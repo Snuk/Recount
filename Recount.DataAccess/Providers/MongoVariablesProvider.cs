@@ -12,7 +12,7 @@ namespace Recount.DataAccess.Providers
 
         public MongoVariablesProvider()
         {
-            _variablesCollection = new MongoClient(new MongoUrl("mongodb://localhost:27017")).GetDatabase("recount")
+            _variablesCollection = new MongoClient(new MongoUrl("mongodb://mongodb-1-servers-vm-0:27017")).GetDatabase("recount")
                 .GetCollection<VariableEntity>("variables");
         }
 

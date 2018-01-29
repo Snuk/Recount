@@ -8,8 +8,14 @@ namespace Recount.Api.Controllers
     [Route("api/[controller]")]
     public class InterpreterController : Controller
     {
-        private readonly MongoFunctionsProvider _functionsProvider = new MongoFunctionsProvider();
-        private readonly MongoVariablesProvider _variablesProvider = new MongoVariablesProvider();
+        private readonly MongoFunctionsProvider _functionsProvider;
+        private readonly MongoVariablesProvider _variablesProvider;
+
+        public InterpreterController(MongoFunctionsProvider functionsProvider, MongoVariablesProvider variablesProvider)
+        {
+            _functionsProvider = functionsProvider;
+            _variablesProvider = variablesProvider;
+        }
 
         [HttpPost]
         public string Get(string expression)

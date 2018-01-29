@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Recount.Core.Functions;
 using Recount.Core.Lexemes;
+using Recount.DataAccess.Options;
 
 namespace Recount.DataAccess.Providers
 {
     public class MongoFunctionsProvider : IFunctionsProvider
     {
-        //mongodb-1-servers-vm-0:27017
+        private const string CollectionName = "functions";
         private readonly IMongoCollection<Function> _functionsCollection;
 
-        public MongoFunctionsProvider()
+        public MongoFunctionsProvider(IOptions<MongoOptions> mongoOptions)
         {
-            _functionsCollection = new MongoClient(new MongoUrl("mongodb://mongodb-1-servers-vm-0:27017")).GetDatabase("recount")
-                .GetCollection<Function>("functions");
+            _functionsCollection = new MongoClient(new MongoUrl(mongoOptions.Value.ConnectionString))
+                .GetDatabase(mongoOptions.Value.DatabaseName).GetCollection<Function>(CollectionName);
         }
 
         public void Add(Function function)

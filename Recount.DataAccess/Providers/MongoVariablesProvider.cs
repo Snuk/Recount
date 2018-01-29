@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Recount.Core.Lexemes;
+using Recount.DataAccess.Options;
 
 namespace Recount.DataAccess.Providers
 {
     public class MongoVariablesProvider : IVariablesProvider
     {
-        //mongodb-1-servers-vm-0:27017
+        private const string CollectionName = "variables";
         private readonly IMongoCollection<VariableEntity> _variablesCollection;
 
-        public MongoVariablesProvider()
+        public MongoVariablesProvider(IOptions<MongoOptions> mongoOptions)
         {
-            _variablesCollection = new MongoClient(new MongoUrl("mongodb://mongodb-1-servers-vm-0:27017")).GetDatabase("recount")
-                .GetCollection<VariableEntity>("variables");
+            _variablesCollection = new MongoClient(new MongoUrl(mongoOptions.Value.ConnectionString))
+                .GetDatabase(mongoOptions.Value.DatabaseName).GetCollection<VariableEntity>(CollectionName);
         }
 
         public void Add(string name, double value)

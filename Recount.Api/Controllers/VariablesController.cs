@@ -8,7 +8,12 @@ namespace Recount.Api.Controllers
     [Route("api/[controller]")]
     public class VariablesController : Controller
     {
-        private readonly MongoVariablesProvider _variablesProvider = new MongoVariablesProvider();
+        private readonly MongoVariablesProvider _variablesProvider;
+
+        public VariablesController(MongoVariablesProvider variablesProvider)
+        {
+            _variablesProvider = variablesProvider;
+        }
 
         [HttpGet]
         public Dictionary<string, double> Get()

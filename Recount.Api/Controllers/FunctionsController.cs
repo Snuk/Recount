@@ -9,7 +9,12 @@ namespace Recount.Api.Controllers
     [Route("api/[controller]")]
     public class FunctionsController : Controller
     {
-        private readonly MongoFunctionsProvider _functionsProvider = new MongoFunctionsProvider();
+        private readonly MongoFunctionsProvider _functionsProvider;
+
+        public FunctionsController(MongoFunctionsProvider functionsProvider)
+        {
+            _functionsProvider = functionsProvider;
+        }
 
         [HttpGet]
         public List<Function> Get()

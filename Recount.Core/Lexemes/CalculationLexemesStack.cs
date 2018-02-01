@@ -10,17 +10,17 @@ namespace Recount.Core.Lexemes
 {
     public class CalculationLexemesStack : ILexemesStack
     {
-        private readonly IVariablesProvider _variablesProvider;
-        private readonly IFunctionsProvider _functionsProvider;
+        private readonly IVariablesRepository _variablesRepository;
+        private readonly IFunctionsRepository _functionsRepository;
         private readonly Stack<Operator> _operators;
         private readonly Stack<Lexeme> _operands;
 
         private int _bracketsBalance;
 
-        public CalculationLexemesStack(IVariablesProvider variablesProvider, IFunctionsProvider functionsProvider)
+        public CalculationLexemesStack(IVariablesRepository variablesRepository, IFunctionsRepository functionsRepository)
         {
-            _variablesProvider = variablesProvider;
-            _functionsProvider = functionsProvider;
+            _variablesRepository = variablesRepository;
+            _functionsRepository = functionsRepository;
             _operators = new Stack<Operator>();
             _operands = new Stack<Lexeme>();
         }
@@ -75,17 +75,17 @@ namespace Recount.Core.Lexemes
 
         public void AddFunction(Function function)
         {
-            _functionsProvider.Add(function);
+            _functionsRepository.Add(function);
         }
 
         public void AddVariable(string name, double value)
         {
-            _variablesProvider.Add(name, value);
+            _variablesRepository.Add(name, value);
         }
 
         public Function GetFunction(string name)
         {
-            return _functionsProvider.Get(name);
+            return _functionsRepository.Get(name);
         }
 
         public void PopOperators()
@@ -102,7 +102,7 @@ namespace Recount.Core.Lexemes
                     var secondOperand = PopOperand();
                     if (secondOperand is Variable variable)
                     {
-                        _variablesProvider.Add(variable.Body, number);
+                        _variablesRepository.Add(variable.Body, number);
                         Push(new Number(number));
                         continue;
                     }
@@ -136,7 +136,7 @@ namespace Recount.Core.Lexemes
 
         public CalculationLexemesStack Copy()
         {
-            return new CalculationLexemesStack(_variablesProvider, _functionsProvider);
+            return new CalculationLexemesStack(_variablesRepository, _functionsRepository);
         }
 
         private void Clear()
@@ -182,7 +182,7 @@ namespace Recount.Core.Lexemes
                     return number.Value;
 
                 case Variable variable:
-                    return _variablesProvider.Get(variable.Body);
+                    return _variablesRepository.Get(variable.Body);
             }
 
             throw new SyntaxException(operand);

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Recount.Core.Functions;
-using Recount.DataAccess.Providers;
+using Recount.DataAccess.Repositories;
 
 namespace Recount.Api.Controllers
 {
@@ -9,41 +9,41 @@ namespace Recount.Api.Controllers
     [Route("api/[controller]")]
     public class FunctionsController : Controller
     {
-        private readonly MongoFunctionsProvider _functionsProvider;
+        private readonly FunctionsMongoRepository _functionsRepository;
 
-        public FunctionsController(MongoFunctionsProvider functionsProvider)
+        public FunctionsController(FunctionsMongoRepository repository)
         {
-            _functionsProvider = functionsProvider;
+            _functionsRepository = repository;
         }
 
         [HttpGet]
         public List<Function> Get()
         {
-            return _functionsProvider.GetAll();
+            return _functionsRepository.GetAll();
         }
 
         [HttpGet("{name}")]
         public Function Get(string name)
         {
-            return _functionsProvider.Get(name);
+            return _functionsRepository.Get(name);
         }
 
         [HttpPost]
         public void Post([FromBody] Function function)
         {
-            _functionsProvider.Add(function);
+            _functionsRepository.Add(function);
         }
 
         [HttpPut]
         public void Put([FromBody] Function function)
         {
-            _functionsProvider.Add(function);
+            _functionsRepository.Add(function);
         }
 
         [HttpDelete("{name}")]
         public void Delete(string name)
         {
-            _functionsProvider.Delete(name);
+            _functionsRepository.Delete(name);
         }
     }
 }

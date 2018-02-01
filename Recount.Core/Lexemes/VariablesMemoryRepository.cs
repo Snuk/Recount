@@ -2,11 +2,11 @@
 
 namespace Recount.Core.Lexemes
 {
-    public class MemoryVariablesProvider : IVariablesProvider
+    public class VariablesMemoryRepository : IVariablesRepository
     {
         private readonly Dictionary<string, double> _variables;
 
-        public MemoryVariablesProvider()
+        public VariablesMemoryRepository()
         {
             _variables = new Dictionary<string, double>();
         }

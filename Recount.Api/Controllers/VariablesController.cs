@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Recount.DataAccess.Providers;
+using Recount.DataAccess.Repositories;
 
 namespace Recount.Api.Controllers
 {
@@ -8,41 +8,41 @@ namespace Recount.Api.Controllers
     [Route("api/[controller]")]
     public class VariablesController : Controller
     {
-        private readonly MongoVariablesProvider _variablesProvider;
+        private readonly VariablesMongoRepository _variablesRepository;
 
-        public VariablesController(MongoVariablesProvider variablesProvider)
+        public VariablesController(VariablesMongoRepository variablesRepository)
         {
-            _variablesProvider = variablesProvider;
+            _variablesRepository = variablesRepository;
         }
 
         [HttpGet]
         public Dictionary<string, double> Get()
         {
-            return _variablesProvider.GetAll();
+            return _variablesRepository.GetAll();
         }
 
         [HttpGet("{name}")]
         public double Get(string name)
         {
-            return _variablesProvider.Get(name);
+            return _variablesRepository.Get(name);
         }
 
         //[HttpPost]
         //public void Post([FromBody] Variable variable)
         //{
-        //    _variablesProvider.Add(variable);
+        //    _variablesRepository.Add(variable);
         //}
 
         //[HttpPut("{name}")]
         //public void Put(string name, [FromBody] Variable variable)
         //{
-        //    _variablesProvider.Add(variable);
+        //    _variablesRepository.Add(variable);
         //}
 
         [HttpDelete("{name}")]
         public void Delete(string name)
         {
-            _variablesProvider.Delete(name);
+            _variablesRepository.Delete(name);
         }
     }
 }

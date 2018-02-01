@@ -5,14 +5,14 @@ using Recount.Core.Functions;
 using Recount.Core.Lexemes;
 using Recount.DataAccess.Options;
 
-namespace Recount.DataAccess.Providers
+namespace Recount.DataAccess.Repositories
 {
-    public class MongoFunctionsProvider : IFunctionsProvider
+    public class FunctionsMongoRepository : IFunctionsRepository
     {
         private const string CollectionName = "functions";
         private readonly IMongoCollection<Function> _functionsCollection;
 
-        public MongoFunctionsProvider(IOptions<MongoOptions> mongoOptions)
+        public FunctionsMongoRepository(IOptions<MongoOptions> mongoOptions)
         {
             _functionsCollection = new MongoClient(new MongoUrl(mongoOptions.Value.ConnectionString))
                 .GetDatabase(mongoOptions.Value.DatabaseName).GetCollection<Function>(CollectionName);

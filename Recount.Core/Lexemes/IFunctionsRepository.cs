@@ -3,7 +3,7 @@ using Recount.Core.Functions;
 
 namespace Recount.Core.Lexemes
 {
-    public interface IFunctionsProvider
+    public interface IFunctionsRepository
     {
         void Add(Function function);
 

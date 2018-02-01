@@ -5,14 +5,14 @@ using MongoDB.Driver;
 using Recount.Core.Lexemes;
 using Recount.DataAccess.Options;
 
-namespace Recount.DataAccess.Providers
+namespace Recount.DataAccess.Repositories
 {
-    public class MongoVariablesProvider : IVariablesProvider
+    public class VariablesMongoRepository : IVariablesRepository
     {
         private const string CollectionName = "variables";
         private readonly IMongoCollection<VariableEntity> _variablesCollection;
 
-        public MongoVariablesProvider(IOptions<MongoOptions> mongoOptions)
+        public VariablesMongoRepository(IOptions<MongoOptions> mongoOptions)
         {
             _variablesCollection = new MongoClient(new MongoUrl(mongoOptions.Value.ConnectionString))
                 .GetDatabase(mongoOptions.Value.DatabaseName).GetCollection<VariableEntity>(CollectionName);

@@ -2,7 +2,7 @@
 
 namespace Recount.Core.Lexemes
 {
-    public interface IVariablesProvider
+    public interface IVariablesRepository
     {
         void Add(string name, double value);
 

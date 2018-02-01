@@ -4,11 +4,11 @@ using Recount.Core.Functions;
 
 namespace Recount.Core.Lexemes
 {
-    public class MemoryFunctionsProvider : IFunctionsProvider
+    public class FunctionsMemoryRepository : IFunctionsRepository
     {
         private readonly Dictionary<string, Function> _functions;
 
-        public MemoryFunctionsProvider()
+        public FunctionsMemoryRepository()
         {
             _functions = new Dictionary<string, Function>();
         }

@@ -10,15 +10,15 @@ job_build_dotnet:
         - dotnet build Recount.Api\\Recount.Api.csproj
         
 job_build_docker:
-       stage: docker
-       image: docker:latest
-       services:
+    stage: docker
+    image: docker:latest
+    services:
         - docker:dind
-       script:
+    script:
         - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
         - docker build -t registry.gitlab.com/snuk/recount/recount-api .
         - docker push registry.gitlab.com/snuk/recount/recount-api
-       dependencies:
+    dependencies:
         - job_build_dotnet
         
       

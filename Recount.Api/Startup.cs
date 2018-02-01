@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Recount.DataAccess.Options;
-using Recount.DataAccess.Providers;
+using Recount.DataAccess.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Recount.Api
@@ -28,8 +28,8 @@ namespace Recount.Api
           //  services.AddScoped<ApiExceptionFilter>();
 
             services.Configure<MongoOptions>(Configuration.GetSection("Mongo"))
-                .AddSingleton<MongoFunctionsProvider>()
-                .AddSingleton<MongoVariablesProvider>();
+                .AddSingleton<FunctionsMongoRepository>()
+                .AddSingleton<VariablesMongoRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

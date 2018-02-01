@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Recount.Core;
 using Recount.Core.Lexemes;
-using Recount.DataAccess.Providers;
+using Recount.DataAccess.Repositories;
 
 namespace Recount.Api.Controllers
 {
     [Route("api/[controller]")]
     public class InterpreterController : Controller
     {
-        private readonly MongoFunctionsProvider _functionsProvider;
-        private readonly MongoVariablesProvider _variablesProvider;
+        private readonly FunctionsMongoRepository _functionsRepository;
+        private readonly VariablesMongoRepository _variablesRepository;
 
-        public InterpreterController(MongoFunctionsProvider functionsProvider, MongoVariablesProvider variablesProvider)
+        public InterpreterController(FunctionsMongoRepository repository, VariablesMongoRepository variablesRepository)
         {
-            _functionsProvider = functionsProvider;
-            _variablesProvider = variablesProvider;
+            _functionsRepository = repository;
+            _variablesRepository = variablesRepository;
         }
 
         [HttpPost]
         public string Get(string expression)
         {
-            var lexemesStack = new CalculationLexemesStack(_variablesProvider, _functionsProvider);
+            var lexemesStack = new CalculationLexemesStack(_variablesRepository, _functionsRepository);
             var interpreter = new Interpreter(lexemesStack);
             return interpreter.Execute(expression).ToString();
         }

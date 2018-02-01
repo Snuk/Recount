@@ -8,13 +8,13 @@ namespace Recount.Core.InterpreterStates
     {
         private readonly Function _function;
         private InterpreterState _validatorState;
-        private readonly FunctionValidatorLexemesStack _validatorStack;
+        private readonly ValidatorLexemesStack _validatorStack;
         private readonly LexemeBuilder _functionBodyBuilder;
 
         public FunctionBodyReadingState(Function function)
         {
             _function = function;
-            _validatorStack = new FunctionValidatorLexemesStack(_function.Parameters);
+            _validatorStack = new ValidatorLexemesStack(_function.Parameters);
             _validatorState = new OpeningBracketOperatorState();
             _functionBodyBuilder = new LexemeBuilder();
         }

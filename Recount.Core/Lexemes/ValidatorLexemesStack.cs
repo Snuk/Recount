@@ -7,12 +7,12 @@ using Recount.Core.Variables;
 
 namespace Recount.Core.Lexemes
 {
-    public class FunctionValidatorLexemesStack : ILexemesStack
+    public class ValidatorLexemesStack : ILexemesStack
     {
         private readonly List<string> _functionParameters;
         private int _bracketsBalance;
 
-        public FunctionValidatorLexemesStack(List<string> functionParameters)
+        public ValidatorLexemesStack(List<string> functionParameters)
         {
             _functionParameters = functionParameters;
             _bracketsBalance = 0;

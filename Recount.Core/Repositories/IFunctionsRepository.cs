@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Recount.Core.Functions;
 
-namespace Recount.Core.Lexemes
+namespace Recount.Core.Repositories
 {
     public interface IFunctionsRepository
     {

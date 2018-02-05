@@ -1,4 +1,5 @@
-﻿using Recount.Core.Lexemes;
+﻿using Recount.Core.Contexts;
+using Recount.Core.Lexemes;
 using Recount.Core.Numbers;
 using Recount.Core.Operators;
 using Recount.Core.Symbols;
@@ -15,7 +16,7 @@ namespace Recount.Core.InterpreterStates
             _variableBuilder = new LexemeBuilder(symbol);
         }
 
-        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack, ExecutorContext context)
         {
             switch (symbol.Type)
             {

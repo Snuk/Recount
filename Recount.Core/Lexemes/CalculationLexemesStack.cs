@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Recount.Core.Contexts;
 using Recount.Core.Exceptions;
-using Recount.Core.Functions;
 using Recount.Core.Numbers;
 using Recount.Core.Operators;
 using Recount.Core.Variables;
@@ -10,26 +10,22 @@ namespace Recount.Core.Lexemes
 {
     public class CalculationLexemesStack : ILexemesStack
     {
-        private readonly IVariablesRepository _variablesRepository;
-        private readonly IFunctionsRepository _functionsRepository;
         private readonly Stack<Operator> _operators;
         private readonly Stack<Lexeme> _operands;
 
         private int _bracketsBalance;
 
-        public CalculationLexemesStack(IVariablesRepository variablesRepository, IFunctionsRepository functionsRepository)
+        public CalculationLexemesStack()
         {
-            _variablesRepository = variablesRepository;
-            _functionsRepository = functionsRepository;
             _operators = new Stack<Operator>();
             _operands = new Stack<Lexeme>();
         }
 
-        public double? GetResult()
+        public double? GetResult(ExecutorContext context)
         {
             try
             {
-                return PopNumber();
+                return PopNumber(context);
             }
             catch (Exception)
             {
@@ -73,22 +69,7 @@ namespace Recount.Core.Lexemes
             }
         }
 
-        public void AddFunction(Function function)
-        {
-            _functionsRepository.Add(function);
-        }
-
-        public void AddVariable(string name, double value)
-        {
-            _variablesRepository.Add(name, value);
-        }
-
-        public Function GetFunction(string name)
-        {
-            return _functionsRepository.Get(name);
-        }
-
-        public void PopOperators()
+        public void PopOperators(ExecutorContext context)
         {
             var lastOperator = PopOperator();
 
@@ -98,11 +79,11 @@ namespace Recount.Core.Lexemes
 
                 if (previousOperator is AssignmentOperator)
                 {
-                    var number = PopNumber();
+                    var number = PopNumber(context);
                     var secondOperand = PopOperand();
                     if (secondOperand is Variable variable)
                     {
-                        _variablesRepository.Add(variable.Body, number);
+                        context._variablesRepository.Add(variable.Body, number);
                         Push(new Number(number));
                         continue;
                     }
@@ -113,8 +94,8 @@ namespace Recount.Core.Lexemes
                 }
 
                 var result = previousOperator.Binary
-                                 ? previousOperator.ExecuteBinary(PopNumber(), PopNumber())
-                                 : previousOperator.ExecuteUnary(PopNumber());
+                                 ? previousOperator.ExecuteBinary(PopNumber(context), PopNumber(context))
+                                 : previousOperator.ExecuteUnary(PopNumber(context));
 
                 var lexeme = new Number(result);
                 _operands.Push(lexeme);
@@ -132,11 +113,6 @@ namespace Recount.Core.Lexemes
             {
                 Push(lastOperator);
             }
-        }
-
-        public CalculationLexemesStack Copy()
-        {
-            return new CalculationLexemesStack(_variablesRepository, _functionsRepository);
         }
 
         private void Clear()
@@ -173,7 +149,7 @@ namespace Recount.Core.Lexemes
             return _operands.Pop();
         }
 
-        private double PopNumber()
+        private double PopNumber(ExecutorContext context)
         {
             var operand = PopOperand();
             switch (operand)
@@ -182,7 +158,7 @@ namespace Recount.Core.Lexemes
                     return number.Value;
 
                 case Variable variable:
-                    return _variablesRepository.Get(variable.Body);
+                    return context._variablesRepository.Get(variable.Body);
             }
 
             throw new SyntaxException(operand);

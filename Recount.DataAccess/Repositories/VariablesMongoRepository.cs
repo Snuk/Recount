@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Recount.Core.Lexemes;
+using Recount.Core.Repositories;
 using Recount.DataAccess.Options;
 
 namespace Recount.DataAccess.Repositories

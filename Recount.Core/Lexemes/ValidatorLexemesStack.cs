@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Recount.Core.Contexts;
 using Recount.Core.Exceptions;
-using Recount.Core.Functions;
 using Recount.Core.Operators;
 using Recount.Core.Variables;
 
@@ -9,12 +8,12 @@ namespace Recount.Core.Lexemes
 {
     public class ValidatorLexemesStack : ILexemesStack
     {
-        private readonly List<string> _functionParameters;
         private int _bracketsBalance;
+        private readonly Stack<Variable> _variables;
 
-        public ValidatorLexemesStack(List<string> functionParameters)
+        public ValidatorLexemesStack()
         {
-            _functionParameters = functionParameters;
+            _variables = new Stack<Variable>();
             _bracketsBalance = 0;
         }
 
@@ -23,12 +22,20 @@ namespace Recount.Core.Lexemes
             return _bracketsBalance == 0;
         }
 
-        public double? GetResult()
+        public double? GetResult(ExecutorContext context)
         {
-            throw new NotImplementedException();
+            foreach (var variable in _variables)
+            {
+                if (context._variablesRepository.Get(variable.Body) == null)
+                {
+                    throw new SyntaxException(variable);
+                }
+            }
+
+            return null;
         }
 
-        public void PopOperators()
+        public void PopOperators(ExecutorContext context)
         {
         }
 
@@ -37,10 +44,7 @@ namespace Recount.Core.Lexemes
             switch (lexeme)
             {
                 case Variable variable:
-                    if (!_functionParameters.Contains(variable.Body))
-                    {
-                        throw new SyntaxException(lexeme);
-                    }
+                    _variables.Push(variable);
                     break;
 
                 case OpeningBracket _:
@@ -56,26 +60,6 @@ namespace Recount.Core.Lexemes
             {
                 throw new SyntaxException(lexeme);
             }
-        }
-
-        public void AddFunction(Function function)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddVariable(string name, double value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Function GetFunction(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public CalculationLexemesStack Copy()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,21 +1,13 @@
-﻿using Recount.Core.Functions;
+﻿using Recount.Core.Contexts;
 
 namespace Recount.Core.Lexemes
 {
     public interface ILexemesStack
     {
-        double? GetResult();
+        double? GetResult(ExecutorContext context);
 
-        void PopOperators();
+        void PopOperators(ExecutorContext context);
 
         void Push(Lexeme lexeme);
-
-        void AddFunction(Function function);
-
-        void AddVariable(string name, double value);
-
-        Function GetFunction(string name);
-
-        CalculationLexemesStack Copy();
     }
 }

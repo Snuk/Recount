@@ -1,4 +1,5 @@
-﻿using Recount.Core.Functions;
+﻿using Recount.Core.Contexts;
+using Recount.Core.Functions;
 using Recount.Core.Lexemes;
 using Recount.Core.Operators;
 using Recount.Core.Symbols;
@@ -15,7 +16,7 @@ namespace Recount.Core.InterpreterStates
             _functionSignature = new FunctionSignature(functionName);
         }
 
-        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack, ExecutorContext context)
         {
             switch (symbol.Type)
             {

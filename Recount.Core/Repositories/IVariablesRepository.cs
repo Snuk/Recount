@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Recount.Core.Lexemes
+namespace Recount.Core.Repositories
 {
     public interface IVariablesRepository
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Recount.Core;
-using Recount.Core.Lexemes;
+using Recount.Core.Contexts;
 using Recount.DataAccess.Repositories;
 
 namespace Recount.Api.Controllers
@@ -20,8 +20,7 @@ namespace Recount.Api.Controllers
         [HttpPost]
         public string Get(string expression)
         {
-            var lexemesStack = new CalculationLexemesStack(_variablesRepository, _functionsRepository);
-            var interpreter = new Interpreter(lexemesStack);
+            var interpreter = new Interpreter(new ExecutorContext(_variablesRepository, _functionsRepository));
             return interpreter.Execute(expression).ToString();
         }
     }

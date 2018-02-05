@@ -1,4 +1,5 @@
-﻿using Recount.Core.InterpreterStates;
+﻿using Recount.Core.Contexts;
+using Recount.Core.InterpreterStates;
 using Recount.Core.Lexemes;
 using Recount.Core.Symbols;
 
@@ -7,10 +8,12 @@ namespace Recount.Core
     public class Interpreter
     {
         private readonly ILexemesStack _stack;
+        private readonly ExecutorContext _context;
 
-        public Interpreter(ILexemesStack stack)
+        public Interpreter(ExecutorContext context)
         {
-            _stack = stack;
+            _stack = new CalculationLexemesStack();
+            _context = context;
         }
 
         public double? Execute(string expression)
@@ -21,13 +24,13 @@ namespace Recount.Core
             {
                 var symbol = SymbolFactory.CreateSymbol(expression, index);
 
-                state = state.MoveToNextState(symbol, _stack);
-                state.Execute(_stack);
+                state = state.MoveToNextState(symbol, _stack, _context);
+                state.Execute(_stack, _context);
             }
 
-            state = state.MoveToFinalState(expression.Length, _stack);
-            state.Execute(_stack);
-            return _stack.GetResult();
+            state = state.MoveToFinalState(expression.Length, _stack, _context);
+            state.Execute(_stack, _context);
+            return _stack.GetResult(_context);
         }
     }
 }

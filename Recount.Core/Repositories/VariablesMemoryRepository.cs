@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Recount.Core.Lexemes;
 
-namespace Recount.Core.Lexemes
+namespace Recount.Core.Repositories
 {
     public class VariablesMemoryRepository : IVariablesRepository
     {

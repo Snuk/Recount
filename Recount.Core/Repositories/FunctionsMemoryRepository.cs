@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Recount.Core.Functions;
+using Recount.Core.Lexemes;
 
-namespace Recount.Core.Lexemes
+namespace Recount.Core.Repositories
 {
     public class FunctionsMemoryRepository : IFunctionsRepository
     {

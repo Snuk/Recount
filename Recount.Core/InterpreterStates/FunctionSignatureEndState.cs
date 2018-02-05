@@ -1,4 +1,5 @@
-﻿using Recount.Core.Functions;
+﻿using Recount.Core.Contexts;
+using Recount.Core.Functions;
 using Recount.Core.Lexemes;
 using Recount.Core.Numbers;
 using Recount.Core.Operators;
@@ -15,7 +16,7 @@ namespace Recount.Core.InterpreterStates
             _functionSignature = functionSignature;
         }
 
-        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack)
+        public override InterpreterState MoveToNextState(Symbol symbol, ILexemesStack stack, ExecutorContext context)
         {
             switch (symbol.Type)
             {
@@ -40,10 +41,10 @@ namespace Recount.Core.InterpreterStates
                         return new ErrorState(symbol);
                     }
 
-                    var function = stack.GetFunction(_functionSignature.Name.Body);
-                    var result = EvaluateFunction(_functionSignature, function, stack);
+                    var function = context._functionsRepository.Get(_functionSignature.Name.Body);
+                    var result = FunctionExecutor.Execute(_functionSignature, function, context);
 
-                    stack.Push(result);
+                    stack.Push(new Number(result.Value));
                     stack.Push(@operator);
 
                     if (@operator is ClosingBracket)
@@ -56,28 +57,6 @@ namespace Recount.Core.InterpreterStates
                 default:
                     return new ErrorState(symbol);
             }
-        }
-
-        private static Number EvaluateFunction(FunctionSignature signature, Function function, ILexemesStack stack)
-        {
-            var bodyCalculationStack = new CalculationLexemesStack(new VariablesMemoryRepository(), new FunctionsMemoryRepository());
-
-            for (var index = 0; index < signature.Arguments.Count; index++)
-            {
-                var argument = signature.Arguments[index];
-                var parameter = function.Parameters[index];
-
-                var argumentCalculatorStack = stack.Copy();
-                var argumentCalculator = new Interpreter(argumentCalculatorStack);
-                var argumentValue = argumentCalculator.Execute(argument.Body);
-
-                bodyCalculationStack.AddVariable(parameter, argumentValue.Value);
-            }
-
-            var bodyCalculator = new Interpreter(bodyCalculationStack);
-            var functionValue = bodyCalculator.Execute(function.Body);
-
-            return new Number(functionValue.Value);
         }
     }
 }

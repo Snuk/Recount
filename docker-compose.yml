@@ -6,3 +6,6 @@ services:
     build:
       context: .
       dockerfile: Recount.Api/Dockerfile
+      
+  mongo:
+    image: mongo
